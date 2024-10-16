@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Roblox</title>
+    <script>
+        let nameIsValid = false;
+        let birthdayIsValid = false;
+
+        function answer2() {
+            var response = "I'm not sure.";
+            document.getElementById('response1').innerText = response;
+        }
+
+        function answer1() {
+            var response = "Could be you, who knows, let's see.";
+            document.getElementById('response1').innerText = response;
+        }
+
+        function disableButton(buttonId) {
+            document.getElementById(buttonId).disabled = true;
+        }
+
+        function checkAnswer() {
+            var input = document.getElementById('answerInput').value.toLowerCase();
+            var response = "";
+            if (input === "vanessa" || input === "vanessa nguyen" || input === "vanessa nguyễn") {
+                response = "Hmm, i guess it is you.";
+                nameIsValid = true;
+            } else if (input === "henry" || input === "henry le" || input === "hoang" || input === "henry hoang" || input === "hoang le" || input === "le hoang henry") {
+                response = "I don't like gundam 00.";
+                nameIsValid = false;
+            } else if (input === "muhammad") {
+                response = "I believe you the most.";
+                nameIsValid = false;
+            } else {
+                response = "I don't know you.";
+                nameIsValid = false;
+            }
+            document.getElementById('response2').innerText = response;
+            checkCompletion();
+        }
+
+        function checkBirthday() {
+            var input = document.getElementById('answerInput1').value;
+            var response = "";
+            if (input === "25/01/2009") {
+                response = "95%";
+                birthdayIsValid = true;
+            } else {
+                response = "yehhh";
+                birthdayIsValid = false;
+            }
+            document.getElementById('response3').innerText = response;
+            checkCompletion();
+        }
+
+        function checkCompletion() {
+            if (nameIsValid && birthdayIsValid) {
+                document.getElementById('hiddenQuestion').style.display = 'block';
+            }
+        }
+
+        function handleHiddenAnswer(answer) {
+            var response = "";
+            if (answer === 'yes') {
+                response = "Right, you are Vanessa. We both made mistakes, and we talked about them. We can forgive each other and start fresh. I want to ask you, would you like to be my girl again, and forever?";
+                document.getElementById('hiddenNo').disabled = true;
+                showFinalQuestion();
+            } else {
+                response = "nevermind";
+                document.getElementById('hiddenYes').disabled = true;
+            }
+            document.getElementById('hiddenResponse').innerText = response;
+        }
+
+        function showFinalQuestion() {
+            document.getElementById('finalQuestion').style.display = 'block';
+        }
+
+        function handleFinalAnswer(answer) {
+            var response = "";
+            if (answer === 'yes') {
+                response = "I promise I will love you forever and never leave you again.";
+                document.getElementById('finalNo').disabled = true;
+            } else {
+                response = "I'm sorry for wasting your time.";
+                document.getElementById('finalYes').disabled = true;
+            }
+            document.getElementById('finalResponse').innerText = response;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var input = document.getElementById('answerInput');
+            input.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    checkAnswer();
+                }
+            });
+            var input1 = document.getElementById('answerInput1');
+            input1.addEventListener('keypress', function(event) {
+                if (event.key === 'Enter') {
+                    event.preventDefault();
+                    checkBirthday();
+                }
+            });
+        });
+    </script>
+</head>
+<body>
+    <p>1. R u a boy or a girl?</p>
+    <button id="b" onclick="disableButton('g'); answer2();">boy</button>
+    <button id="g" onclick="disableButton('b'); answer1();">girl?</button>
+    <p id="response1"></p>
+    <p>2. Type your name:</p>
+    <input type="text" id="answerInput" placeholder="Type here">
+    <button onclick="checkAnswer()">Submit</button>
+    <p id="response2"></p>
+    <p>3. Your Birthday:</p>
+    <input type="text" id="answerInput1" placeholder="DD/MM/YYYY">
+    <button onclick="checkBirthday()">Submit</button>
+    <p id="response3"></p>
+    <div id="hiddenQuestion" style="display:none;">
+        <p>Are you the short girl with glasses?</p>
+        <button id="hiddenYes" onclick="handleHiddenAnswer('yes')">Yes</button>
+        <button id="hiddenNo" onclick="handleHiddenAnswer('no')">No</button>
+        <p id="hiddenResponse"></p>
+    </div>
+    <div id="finalQuestion" style="display:none;">
+        <button id="finalYes" onclick="handleFinalAnswer('yes')">Yes</button>
+        <button id="finalNo" onclick="handleFinalAnswer('no')">No</button>
+        <p id="finalResponse"></p>
+    </div>
+</body>
+</html>
